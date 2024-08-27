@@ -1,0 +1,62 @@
+#include <iostream>
+//#include<bits/stdc++.h>
+using namespace std;
+ 
+ class node{
+     public:
+     int data;
+     node* next;
+     
+     node(int val){
+         data= val;
+         next= NULL;
+     }
+ };
+ void inserAtTail(node* &head, int val){
+     node* n= new node(val);
+     if(head ==NULL){
+         head=n;
+         return;
+     }
+     node * temp=head;
+     while(temp->next!=NULL){
+         temp=temp->next;
+     }
+     temp->next=n;
+ }
+  
+  node* reverse(node* &head){
+      node* prevptr= NULL;
+      node* currentptr= head;
+      node* nextptr;
+      
+      while(currentptr!= NULL){
+          nextptr=currentptr->next;
+          currentptr->next= prevptr;
+          
+          prevptr= currentptr;
+          currentptr= nextptr;
+      }
+      return prevptr;
+  }
+ void display(node* head){
+     node* temp=head;
+     while(temp!=NULL){
+         cout<<temp->data<<" ";
+         temp=temp->next;
+     }
+     cout<<endl;
+ }
+ 
+int main()
+{
+   node* head= NULL;
+   inserAtTail(head, 1);
+   inserAtTail(head, 2);
+    inserAtTail(head, 3);
+     inserAtTail(head, 4);
+      inserAtTail(head, 5);
+      display(head);
+      node* newNode=reverse(head);
+      display(newNode);
+}

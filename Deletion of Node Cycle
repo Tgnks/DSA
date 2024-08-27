@@ -1,0 +1,94 @@
+#include <iostream>
+#include<bits/stdc++.h>
+using namespace std;
+class Node{
+    public:
+    int data;
+    Node* next;
+    Node(int val){
+        data= val;
+        next= NULL;
+    }
+};
+
+Node* takeInputbetter(){
+    int data;
+     cin>>data;
+     Node* head= NULL;
+     Node* tail=NULL;
+     while(data!=-1){
+         Node* newNode= new Node(data);
+         if(head== NULL){
+             head= newNode;
+             tail=newNode;
+         }else{
+             tail->next= newNode;
+             tail= tail->next;
+         }
+         cin>>data;
+     }
+     return head;
+}
+
+void makeCycle(Node* &head, int pos){
+    Node* temp= head;
+    Node* startNode;
+    
+    int count=1;
+    while(temp->next!=NULL){
+        if(count== pos){
+            startNode = temp;
+        }
+        temp= temp->next;
+        count++;
+    }
+    temp->next=startNode;
+}
+
+bool detectCycle(Node* &head){
+
+    Node* slow = head;
+    Node* fast= head;
+    
+    while(fast!= NULL && fast->next!=NULL){
+        slow= slow->next;
+        fast= fast->next->next;
+        if(fast== slow){
+            return true;
+        }
+    }
+    return false;
+}
+
+void removeCycle(Node* &head){
+    Node* slow= head;
+    Node* fast= head;
+    
+    do{
+        slow= slow->next;
+        fast= fast->next->next;
+    }while(slow!=fast);
+    fast=head;
+    while(slow->next!=fast->next){
+        slow=slow->next;
+        fast=fast->next;
+    }
+    slow->next= NULL;
+}
+void display(Node* head){
+    while(head!=NULL){
+        cout<<head->data<<" ";
+        head= head->next;
+    }
+}
+int main()
+{
+    Node* head= takeInputbetter();
+    display(head);
+    cout<<endl;
+    makeCycle(head,3);
+    cout<<detectCycle(head)<<endl;
+    removeCycle(head);
+    cout<<detectCycle(head)<<endl;
+    
+}

@@ -1,0 +1,68 @@
+#include <iostream>
+#include<bits/stdc++.h>
+using namespace std;
+class Node{
+    public:
+    int data;
+    Node* next;
+    Node(int val){
+        data= val;
+        next= NULL;
+    }
+    
+};
+Node* takeinput(){
+    int data;
+    cin>>data;
+    Node* head= NULL;
+    Node* tail= NULL;
+    while(data!=-1){
+        Node* newNode= new Node(data);
+        if(head==NULL){
+            head= newNode;
+            tail=newNode;
+        }
+        else{
+            tail->next=newNode;
+            tail=tail->next;
+        }
+        cin>>data;
+    }
+   return head; 
+}
+Node* reverseKNode(Node* &head, int k){
+    Node* prevptr=NULL;
+    Node* currentptr= head;
+    Node* nextptr;
+    
+    int count=0;
+    while(currentptr!=NULL && count<k){
+        nextptr= currentptr->next;
+        currentptr->next=prevptr;
+        prevptr= currentptr;
+        currentptr= nextptr;
+        count++;
+    }
+    if(nextptr!=NULL){
+        head->next=reverseKNode(nextptr, k);
+    }
+    return prevptr;
+}
+
+void print(Node* head){
+    while(head!=NULL){
+        cout<<head->data<<" ";
+        head= head->next;
+    }
+    cout<<endl;
+}
+
+int main()
+{
+    Node* head = takeinput();
+    print(head);
+    int k=2;
+    Node* newHead=reverseKNode(head,k);
+    print(newHead);
+    
+}

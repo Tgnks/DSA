@@ -1,0 +1,53 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+class node{
+    public:
+    int data;
+    node* next;
+    node(int val){
+        data= val;
+        next= NULL;
+    }
+};
+node* inputNode(){
+   int data;
+   cin>>data;
+   node* head=NULL;
+   node*tail= NULL;
+   while(data!=-1){
+       node* newNode=new node(data);
+       if(head==NULL){
+           head=newNode;
+           tail=newNode;
+       }else{
+           tail->next=newNode;
+           tail=tail->next;
+       }
+       cin>>data;
+   }
+   return head;
+}
+node* reverseRecursily(node* &head){
+    if(head==NULL || head->next==NULL){
+        return head;
+    }
+    node* newHead=reverseRecursily(head->next);
+    head->next->next=head;
+    head->next=NULL;
+    return newHead;
+}
+void print(node* head){
+    while(head!=NULL){
+        cout<<head->data<<" ";
+        head= head->next;
+    }
+}
+int main()
+{
+   node* head= inputNode();
+    print(head);
+    cout<<endl;
+    node* newHead=reverseRecursily(head);
+    print(newHead);
+}
